@@ -1,8 +1,10 @@
 """Utility functions for working with Wikidata"""
 import requests
 import re
+from string import Template
 
-__version__ = '0.6'
+__version__ = '0.8'
+
 
 def get_coordinates_from_wd_point(point_str):
     regex = re.compile("Point\(-?([\d\.]+) (-?[\d\.]+)\)")
@@ -28,11 +30,13 @@ def get_int_id_from_url(url):
     return int(value_str)
 
 
-def run_query(query, service_url=None):
+def run_query(query, params={}, service_url=None):
 
     if service_url is None:
         service_url = 'https://query.wikidata.org/sparql'
 
-    r = requests.get(service_url, params={'format': 'json', 'query': query})
+    query_template = Template(query)
+    execute_query = query_template.substitute(**params)
+    r = requests.get(service_url, params={'format': 'json', 'query': execute_query})
     response_json = r.json()
     return response_json

@@ -23,10 +23,10 @@ class TestStringMethods(unittest.TestCase):
             SELECT ?unicode_charater
             WHERE 
             {
-            wd:Q44 wdt:P487 ?unicode_charater.
+                wd:$id wdt:P487 ?unicode_charater.
             }
         """
-        result = mkwikidata.run_query(query)
+        result = mkwikidata.run_query(query, params={ "id": "Q44" })
         self.assertEqual(result["results"]["bindings"][0]["unicode_charater"]["value"], "🍺")
 if __name__ == '__main__':
     unittest.main()
