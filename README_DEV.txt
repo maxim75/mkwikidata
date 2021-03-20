@@ -7,3 +7,8 @@ pip3 install -r mkwikidata/requirements.txt
 Run unit tests:
 
 python -m unittest
+
+Publish:
+
+flit build
+flit publish
