@@ -37,12 +37,12 @@ class TestStringMethods(unittest.TestCase):
                          [0]["unicode_charater"]["value"], "🍺")
 
     def test_convert_response_for_data_frame(self):
-        test_query_result = {'head': {'vars': ['unicode_charater']}, 'results': {
+        test_query_result = {'head': {'vars': ['unicode_charater', 'optional_field']}, 'results': {
             'bindings': [{'unicode_charater': {'type': 'literal', 'value': '🍺'}}]}}
 
         (result, columns) = mkwikidata.convert_response_for_data_frame(test_query_result)
 
-        self.assertEqual(len(columns), 1)
+        self.assertEqual(len(columns), 2)
         self.assertEqual(columns[0], "unicode_charater")
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0][0], "🍺")
