@@ -1,0 +1,13 @@
+[build-system]
+requires = ["flit_core >=2,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "mkwikidata"
+author = "Maksym Kozlenko"
+author-email = "max@kozlenko.info"
+home-page = "http://tobeprovided"
+classifiers = ["License :: OSI Approved :: MIT License"]
+requires = [
+    "requests >=2.25.1",
+]
