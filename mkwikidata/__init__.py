@@ -3,7 +3,7 @@ import requests
 import re
 from string import Template
 
-__version__ = '0.8'
+__version__ = '0.9'
 
 
 def get_coordinates_from_wd_point(point_str):
@@ -40,3 +40,21 @@ def run_query(query, params={}, service_url=None):
     r = requests.get(service_url, params={'format': 'json', 'query': execute_query})
     response_json = r.json()
     return response_json
+
+
+def convert_response_for_data_frame(query_result):
+    columns = query_result["head"]["vars"]
+    result = []
+    for row in query_result["results"]["bindings"]:
+        column_values = []
+        for column in columns:
+            column_values.append(row[column]["value"])
+        result.append(column_values)
+
+    return (result, columns)
+
+""" Returns columns and values fot pandas DataFrame"""
+def run_query_with_for_dataframe(query):
+    query_result = run_wikidata_query(query)
+    return convert_response_for_data_frame(query_result)
+    
