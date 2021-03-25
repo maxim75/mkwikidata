@@ -3,11 +3,11 @@ import requests
 import re
 from string import Template
 
-__version__ = '0.12'
+__version__ = '0.14'
 
 
 def get_coordinates_from_wd_point(point_str):
-    regex = re.compile("Point\(-?([\d\.]+) (-?[\d\.]+)\)")
+    regex = re.compile("Point\((-?[\d\.]+) (-?[\d\.]+)\)")
     match = regex.match(point_str)
     if match is None:
         return None
@@ -37,7 +37,7 @@ def run_query(query, params={}, service_url=None):
 
     query_template = Template(query)
     execute_query = query_template.substitute(**params)
-    r = requests.get(service_url, params={'format': 'json', 'query': execute_query})
+    r = requests.post(service_url, params={'format': 'json', 'query': execute_query})
     response_json = r.json()
     return response_json
 
@@ -57,7 +57,7 @@ def convert_response_for_data_frame(query_result):
     return (result, columns)
 
 """ Returns columns and values fot pandas DataFrame"""
-def run_query_with_for_dataframe(query, params={}, service_url=None):
+def run_query_for_dataframe(query, params={}, service_url=None):
     query_result = run_query(query, params=params, service_url=service_url)
     return convert_response_for_data_frame(query_result)
     

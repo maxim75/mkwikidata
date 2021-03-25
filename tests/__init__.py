@@ -16,11 +16,17 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(mkwikidata.get_int_id_from_url(
             "https://commons.wikimedia.org/entity/M81321868"), 81321868)
 
-    def test_get_coordinates_from_wd_point(self):
+    def test_get_coordinates_south_east_from_wd_point(self):
         (lat, lng) = mkwikidata.get_coordinates_from_wd_point(
             "Point(151.02 -34.01)")
         self.assertEqual(lat, -34.01)
         self.assertEqual(lng, 151.02)
+
+    def test_get_coordinates_north_west_from_wd_point(self):
+        (lat, lng) = mkwikidata.get_coordinates_from_wd_point(
+            "Point(-10.01 40.04)")
+        self.assertEqual(lat, 40.04)
+        self.assertEqual(lng, -10.01)
 
     def test_run_query(self):
 
